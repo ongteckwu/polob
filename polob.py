@@ -5,7 +5,7 @@ import time
 Poloniex bot that buys 0.001 EXP every X secs
 """
 
-SECS = 2
+SECS = 60
 AMT = 0.0001
 CURRENCY = "EXP"
 TICKER = 'BTC_{currency}'.format(currency=CURRENCY)
@@ -13,8 +13,8 @@ TICKER = 'BTC_{currency}'.format(currency=CURRENCY)
 # polo
 polo = Poloniex(extend=True, coach=True)
 # API KEY
-# polo.KEY = 1111  # to be filled
-# polo.SECRET = 1111  # to be filled
+polo.KEY = 1111  # to be filled
+polo.SECRET = 1111  # to be filled
 
 TIME = time.time() - SECS
 
