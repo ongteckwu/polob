@@ -6,20 +6,27 @@ Poloniex bot that buys 0.001 EXP every X secs
 """
 
 SECS = 60
-AMT = 0.0001
+AMT = 1
 CURRENCY = "EXP"
-MIN_BALANCE = AMT * 10
+MIN_BALANCE = AMT
 TICKER = 'BTC_{currency}'.format(currency=CURRENCY)
 
 # polo
-polo = Poloniex(extend=True, coach=True)
+polo = Poloniex(extend=True)
 # API KEY
-polo.KEY = 1111  # to be filled
-polo.SECRET = 1111  # to be filled
+polo.Key = 1111  # to be filled
+polo.Secret = 11111  # to be filled
 
 TIME = time.time() - SECS
 # for checking the balance in the first iteration
 currentPrice = polo.returnOrderBook(TICKER, depth=5)["asks"][0][0]
+
+balance = polo.returnBalances()
+if "error" in balance:
+    print(balance["error"])
+    exit()
+else:
+    print("Your BTC balance is {amt}".format(amt=balance["BTC"]))
 
 while True:
     if time.time() - TIME >= SECS:
@@ -27,7 +34,7 @@ while True:
         balanceInBTC = polo.returnBalances()["BTC"]
         # if amount of BTC cannot buy AMT * 10 coins, don't buy
         if float(balanceInBTC) < MIN_BALANCE * float(currentPrice):
-            print("Insufficient balance in BTC to buy {amt} of {cur}. Balance: {bal}. Price of {cur}: {price}".format(
+            print("Insufficient balance in BTC to buy {amt} {cur}. Balance: {bal}. Price of {cur}: {price}".format(
                 bal=balanceInBTC, cur=CURRENCY,
                 price=currentPrice, amt=MIN_BALANCE))
         else:
@@ -37,12 +44,9 @@ while True:
                 currentPrice = polo.returnOrderBook(
                     TICKER, depth=5)["asks"][0][0]
 
-                try:
-                    order = polo.buy(TICKER, currentPrice, AMT)
-                except ValueError as e:
-                    # if KEY and SECRET are wrong, this message gets printed
-                    print(e.message)
-                    exit()
+
+                order = polo.buy(TICKER, currentPrice, AMT)
+                print(order)
 
                 # if order goes through
                 if "orderNumber" in order.keys():
