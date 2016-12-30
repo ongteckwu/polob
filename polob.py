@@ -13,7 +13,7 @@ CURRENCY = "EXP"
 MIN_BALANCE = AMT
 TICKER = 'BTC_{currency}'.format(currency=CURRENCY)
 POLO_TIME_OUT = 5
-TIME_OUT_RETRY_TIME = 1
+TIME_OUT_RETRY_TIME = 5
 
 
 def classDecorator(decorator):
