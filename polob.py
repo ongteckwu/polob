@@ -43,8 +43,8 @@ def timeOutExceptionDecorator(func):
 newPoloniex = classDecorator(timeOutExceptionDecorator)(Poloniex)
 polo = newPoloniex(extend=True, timeout=POLO_TIME_OUT)
 # API KEY
-polo.Key = "Y0E1JVKD-PF0RCBVE-I4OO8K28-YJIHIQJ7"  # to be filled
-polo.Secret = "c31279732b0a375c6645e05a8f7233f3c883198a8195e8f002418258a50152fd4342f8b2db2f1ac771d31fcad154ab61499debf9b9fba69e6e690ce678da1002"  # to be filled
+polo.Key = "1111"  # to be filled
+polo.Secret = "1111"  # to be filled
 
 
 def main():
