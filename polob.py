@@ -18,7 +18,7 @@ TIME_OUT_RETRY_TIME = 5
 
 def classDecorator(decorator):
     def decorate(cls):
-        for name, fn in inspect.getmembers(cls, inspect.ismethod):
+        for name, fn in inspect.getmembers(cls, inspect.isfunction):
             setattr(cls, name, decorator(fn))
         return cls
     return decorate
@@ -31,7 +31,6 @@ def timeOutExceptionDecorator(func):
         try:
             out = func(*args, **kwargs)
         except requests.exceptions.Timeout as e:
-            print(e.message)
             print("Retrying in {sec} secs".format(sec=TIME_OUT_RETRY_TIME))
             time.sleep(TIME_OUT_RETRY_TIME)
             main()
